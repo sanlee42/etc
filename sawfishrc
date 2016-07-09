@@ -1,0 +1,122 @@
+(setq load-path (append load-path '("~/.sawfish")))
+;; =========key sequence==============
+(bind-keys global-keymap
+	   "Super-c" `(jump-or-exec "Chromium" "chromium")
+	   "Super-t" `(jump-or-exec "term" "lilyterm")
+	   "Super-e" `(jump-or-exec "emacs@" "LC_CTYPE=en_US.UTF-8 emacs")
+	   "Super-m" `(jump-or-exec "ThunderBird" "thunderbird"))
+
+;;============workspace==========
+(setq workspace-names '("one" "two" "three" "four" "five" "six" "seven" "eight"))
+(bind-keys global-keymap "C-1" '(activate-workspace 1))
+(bind-keys global-keymap "C-2" '(activate-workspace 2))
+(bind-keys global-keymap "C-3" '(activate-workspace 3))
+(bind-keys global-keymap "C-4" '(activate-workspace 4))
+(bind-keys global-keymap "C-F1" '(activate-workspace 5))
+(bind-keys global-keymap "C-F2" '(activate-workspace 6))
+(bind-keys global-keymap "C-F3" '(activate-workspace 7))
+(bind-keys global-keymap "C-F4" '(activate-workspace 8))
+
+;;============window operation==========
+;;; Super-q to close current window
+(bind-keys window-keymap "Super-q" '(delete-window (current-event-window)))
+;;; move window to (0,0)
+(bind-keys window-keymap "Super-l"
+	   '(move-window-to (current-event-window) 0 0))
+
+;;;;undo window operation
+(bind-keys window-keymap "Super-u" 'undo)
+;;;;
+(bind-keys window-keymap "Super-s" 'run-shell-command)
+;; 返回当前窗口名字
+;; (bind-keys window-keymap "super-b"
+;; '(display-message (window-name (current-event-window))))
+
+;;;; resize-window
+(bind-keys window-keymap "Super-w"
+	   '(move-resize-window-to (current-event-window) -5 -20 1440 900))
+(bind-keys window-keymap "Super-n"
+	   '(move-resize-window-to (current-event-window) 250 100 900 640))
+
+;;;; move window, left,right,top,buttom
+(defun shove-window (dir &optional no-focus)
+  "Move focused window 'left, 'right, 'up or 'down to screen edges."
+  (interactive)
+  (let* ((win (input-focus))
+         (pos (window-position win))
+         (dim (window-frame-dimensions win))
+         (endx (car pos))
+         (endy (cdr pos)))
+    (cond ((eq dir 'left) (setq endx 0))
+          ((eq dir 'right) (setq endx (- (screen-width) (car dim))))
+          ((eq dir 'up) (setq endy 0))
+          ((eq dir 'down) (setq endy (- (screen-height) (cdr dim)))))
+    (move-window-to win endx endy)
+    (unless no-focus
+      (display-window win))))
+(bind-keys global-keymap "Super-Left" '(shove-window 'left))
+(bind-keys global-keymap "Super-Right" '(shove-window 'right))
+(bind-keys global-keymap "Super-Up" '(shove-window 'up))
+(bind-keys global-keymap "Super-Down" '(shove-window 'down))
+
+;; min size window and unmin
+(defun wy-iconify-window (win)
+  (interactive "%w")
+  (iconify-window win)
+  (setq last-iconified-window win))
+
+(defun wy-uniconify-window ()
+  (interactive)
+  (uniconify-window last-iconified-window)
+  (display-window last-iconified-window))
+
+(bind-keys window-keymap "Super-z" 'wy-iconify-window)
+(bind-keys window-keymap "Super-w" 'wy-uniconify-window)
+(bind-keys window-keymap "Super-f" 'maximize-window-toggle)
+;;;move window
+(require 'sawfish.wm.commands.move-resize)
+(defun wy-move-window ()
+  (interactive)
+  (move-window-interactively (current-event-window)))
+
+(bind-keys window-keymap "W-Button1-Click1" 'wy-move-window)
+
+;;============screen shot==============
+					;(bind-keys global-keymap "Print" '(system "import -window root ~/documents/screen_shot/`date '+%Y%m%d-%H%M%S'`.png &")
+
+;;============iswitch-window===========
+(require 'iswitch-window)
+(bind-keys global-keymap "Super-y" 'iswitch-window)
+
+
+;;===========autorun & auto exit============
+;; (define kid-startup-programs
+;;   '(("xloadimage" "-onroot" "-fullscreen" "/home/kid/.desktop")
+;;     ("xscreensaver" "-no-splash")
+;;     ("scim" "-d")
+;;     ("asclock" "-theme" "/home/kid/.asclock/kid")))
+;; (mapc (lambda (program)
+;;         (apply start-process (make-process standard-output) program))
+;;       kid-startup-programs)
+;; (add-hook 'before-exit-hook
+;;           (lambda ()
+;;             (mapc stop-process (active-processes))))
+
+;; =========== wallpaper =================
+;; (require 'backgrounds)
+;; (add-hook 'after-initialization-hook workspace-background-hook)
+;; (add-hook 'enter-workspace-hook workspace-background-hook)
+;; (add-hook 'workspace-state-change-hook workspace-background-customize-hook)
+
+;;================tiling==================
+(require 'sawfish.wm.tile.tile)
+(tall-tiling 0 #:width 1.75 #:top 0 #:bottom 0 #:gap 4 #:max 4 #:right t #:resize t)
+(col-tiling 0 #:top 0 #:bottom 0 #:gap 3 #:cols 3 #:resize t)
+(bind-keys global-keymap
+	   "C-S-KP_Add" 'increase-max-windows
+	   "C-S-KP_Subtract" 'decrease-max-windows
+	   "C-M-KP_Add" 'increase-cols
+	   "C-M-KP_Subtract" 'decrease-cols
+	   "C-M-Right" 'tall-rotate-right
+	   "C-M-Left" 'tall-rotate-left
+	   "C-F11" 'next-tiling)
