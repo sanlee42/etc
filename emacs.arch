@@ -1,10 +1,21 @@
+;;;;;;;;;;;;;;;el-get
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(unless (require 'el-get nil 'noerror)
+(with-current-buffer
+(url-retrieve-synchronously
+	       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+        (goto-char (point-max))
+		(eval-print-last-sexp)))
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get/el-get-user/recipes")
+(el-get 'sync)
+
 ;;;;;;;;;;;;;;;;;;;;;;;; mac specific settings
 (when (eq system-type 'darwin)
   (setq mac-option-modifier 'alt)
   (setq mac-command-modifier 'meta)
   (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
   )
-;;;;;;;;;;;;;;;;;;;;;;; 
+;;;;;;;;;;;;;;;;;;;;;;;
 ;; (when (eq system-type 'gnu/linux)
 ;;   (setq x-super-keysym 'meta)
 ;;   )
@@ -16,14 +27,15 @@
   (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
 			   ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
 			   ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+			   ;("gnu" . "https://elpa.gnu.org/packages/")
+			   ;("melpa" . "https://melpa.org/packages/")
+			   ;("marmalade" . "https://marmalade-repo.org/packages/")
 			   )))
 
 ;(setq-default default-directory "~/")
 ;(setq command-line-default-directory "~/")
 					;pretty symbo
 (global-prettify-symbols-mode 1)
-(setq paredit-mode t)
-(paredit-mode)
 (setenv "PATH" (concat "/usr/local/bin/:" (getenv "PATH") ))
 (setq exec-path (append  '("/usr/local/bin") exec-path))
 (add-to-list 'load-path "~/.emacs.d/site-list")
@@ -45,10 +57,10 @@
 (require 'linum) ;显示列号
 (global-linum-mode 1)
 (setq column-number-mode t)
-(setq line-number-mode t) 
+(setq line-number-mode t)
 ;;高亮显示成对括
 ;; 以 y/n代表 yes/no
-(fset 'yes-or-no-p 'y-or-n-p) 
+(fset 'yes-or-no-p 'y-or-n-p)
 ;;语法加亮
 (global-font-lock-mode t)
 ;;ctrl-shift-space to set-mark
@@ -63,13 +75,13 @@
   (windmove-default-keybindings))
 (icomplete-mode)
 ;;reflash the buffer
-(defun refresh-file ()  
-  (interactive)  
-  (revert-buffer t (not (buffer-modified-p)) t))    
-(global-set-key [(control f5)] 'refresh-file)  
+(defun refresh-file ()
+  (interactive)
+  (revert-buffer t (not (buffer-modified-p)) t))
+(global-set-key [(control f5)] 'refresh-file)
 
 ;;stardict for emacs
-;;1.sdcv :apt-get 
+;;1.sdcv :apt-get
 (global-set-key (kbd "C-c c") 'kid-sdcv-to-buffer)
 (defun kid-sdcv-to-buffer ()
   (interactive)
@@ -110,11 +122,12 @@
  kept-old-versions 2 ; 保留最早的2个备份文件
  version-control t) ; 多次备份
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;auto-complete 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;auto-complete
 (require 'auto-complete-config)
 (ac-config-default)
 
-;;m-n and m-p  
+;;m-n and m-p
 ;;c-s to filter
 ;;self dict
 ;;~/.dict
@@ -134,68 +147,66 @@
 ;;iimage mode
 (autoload 'iimage-mode "iimage" "Support Inline image minor mode." t)
 (autoload 'turn-on-iimage-mode "iimage" "Turn on Inline image minor mode." t)
-					;org-export set 
+					;org-export set
 (setq org-image-actual-width nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;python coding
 ;; 1.Pymacs.(make&&python setup.py install)
 ;; 2.rope (python setup.py install)
 ;; 3.ropemacs(python setup.py install)
-;;complete use M-/
+;; now,jus el-get install ropymacs
 
+;;complete use M-/
 ;; config the ~/.ropeproject/config.py, to add the path of python lib but,Defalut is not need:
-;;such as  prefs.add('python_path','/usr/lib/python2.7') 
+;;such as  prefs.add('python_path','/usr/lib/python2.7')
 ;;show the document use c-c d;c-c p to lookup pydoc; M-/ to rope complete
-(package-initialize)
-(elpy-enable)
-(setq elpy-rpc-python-command "python2")
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    (setq indent-tabs-mode nil)
-	    (setq tab-width 4)
-	    (setq-default python-indent 4)         
-	    (setq-default py-indent-offset 4)
-	    (setq py-guess-indent-offset 4)
-	    ))
 
 ;; (require 'pymacs)
 ;; ;; Initialize Pymacs
-;; (autoload 'pymacs-apply "pymacs")
-;; (autoload 'pymacs-call "pymacs")
-;; (autoload 'pymacs-eval "pymacs" 0 t)
-;; (autoload 'pymacs-exec "pymacs" 0 t)
-;; (autoload 'pymacs-load "pymacs" 0 t)
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" 0 t)
+(autoload 'pymacs-exec "pymacs" 0 t)
+(autoload 'pymacs-load "pymacs" 0 t)
 ;; ;; Initialize Rope
-;; (pymacs-load "ropemacs" "rope-")
-;; (setq ropemacs-enable-autoimport t)
-;; 					;lookup pydoc
-;; (defun hohe2-lookup-pydoc ()
-;;   (interactive)
-;;   (let ((curpoint (point)) (prepoint) (postpoint) (cmd))
-;;     (save-excursion
-;;       (beginning-of-line)
-;;       (setq prepoint (buffer-substring (point) curpoint)))
-;;     (save-excursion
-;;       (end-of-line)
-;;       (setq postpoint (buffer-substring (point) curpoint)))
-;;     (if (string-match "[_a-z][_\\.0-9a-z]*$" prepoint)
-;; 	(setq cmd (substring prepoint (match-beginning 0) (match-end 0))))
-;;     (if (string-match "^[_0-9a-z]*" postpoint)
-;; 	(setq cmd (concat cmd (substring postpoint (match-beginning 0) (match-end 0)))))
-;;     (if (string= cmd "") nil
-;;       (let ((max-mini-window-height 0))
-;; 	(shell-command (concat "pydoc " cmd))))))
+(pymacs-load "ropemacs" "rope-")
+(setq ropemacs-enable-autoimport t)
+					;lookup pydoc
+(defun hohe2-lookup-pydoc ()
+  (interactive)
+  (let ((curpoint (point)) (prepoint) (postpoint) (cmd))
+    (save-excursion
+      (beginning-of-line)
+      (setq prepoint (buffer-substring (point) curpoint)))
+    (save-excursion
+      (end-of-line)
+      (setq postpoint (buffer-substring (point) curpoint)))
+    (if (string-match "[_a-z][_\\.0-9a-z]*$" prepoint)
+	(setq cmd (substring prepoint (match-beginning 0) (match-end 0))))
+    (if (string-match "^[_0-9a-z]*" postpoint)
+	(setq cmd (concat cmd (substring postpoint (match-beginning 0) (match-end 0)))))
+    (if (string= cmd "") nil
+      (let ((max-mini-window-height 0))
+        (shell-command (concat "pydoc " cmd))))))
 
-;; (add-hook 'python-mode-hook
-;; 	  (lambda ()
-;; 	    (local-set-key (kbd "C-c p") 'hohe2-lookup-pydoc)
-;; 	    (add-hook 'before-save-hook 'py-autopep8-buffer nil t)))
-;; (setq py-autopep8-options '("--max-line-length=100"))
 ;; (defun py-test-save-hook()
 ;;   "python Test of save hook"
 ;;   (when (eq major-mode 'python-mode)
 ;;     (shell-command (concat "source ~/workspaces/baidu/spock/build/pythonenv/bin/activate ;python -m doctest " (buffer-file-name)))))
 
-;;(add-hook 'after-save-hook 'py-test-save-hook)
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq elpy-rpc-python-command "python2")
+            (elpy-enable)
+            (setq indent-tabs-mode nil)
+            (setq tab-width 4)
+            (setq-default python-indent 4)
+            (setq-default py-indent-offset 4)
+            (setq py-guess-indent-offset 4)
+            (setq py-autopep8-options '("--max-line-length=100"))
+            (add-to-list 'write-file-functions 'delete-trailing-whitespace)
+            (local-set-key (kbd "C-c p") 'hohe2-lookup-pydoc)
+            (add-hook 'before-save-hook 'py-autopep8-buffer nil t);install py-autopep8
+            ))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;jdee
 ;; (add-to-list 'load-path "~/.emacs.d/auto-save-list/jdee-2.4.1/lisp")
@@ -205,10 +216,9 @@
 ;; (setq auto-mode-alist
 ;;       (append '(("\\.java" . jde-mode)) auto-mode-alist))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
 (set-face-attribute 'default nil
- 		    :family "PragmataPro" :height 150 :weight 'normal)
+ 		    :family "PragmataPro" :height 140 :weight 'normal)
 ;; (set-fontset-font
 ;;  (frame-parameter nil 'font)
 ;;  'han
@@ -381,11 +391,12 @@ type=\"text/css\"/>"
 	)
       )
 ;;;;;;;;;;;;;;;;;;;;;;;clojure;;;;;;;;;;;;;;;;;
-					;http://cider.readthedocs.org/en/latest/configuration/#auto-completion
+;;http://cider.readthedocs.org/en/latest/configuration/#auto-completion
 
 (add-hook 'clojure-mode-hook
 	  (lambda ()
-	    (smartparens-mode)
+	    ;(smartparens-mode)
+        (setq paredit-mode t)
 	    (setq company-mode t)
 	    (setq eldoc-mode t)))
 
