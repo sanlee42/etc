@@ -219,7 +219,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
 (set-face-attribute 'default nil
- 		    :family "PragmataPro" :height 120 :weight 'normal)
+ 		    :family "PragmataPro" :height 160 :weight 'normal)
 ;; (set-fontset-font
 ;;  (frame-parameter nil 'font)
 ;;  'han
@@ -235,7 +235,7 @@
  '(ansi-color-names-vector
    ["black" "#d55e00" "#009e73" "#f8ec59" "#0072b2" "#cc79a7" "#56b4e9" "white"])
  '(column-number-mode t)
- '(custom-enabled-themes (quote (wheatgrass)))
+ '(custom-enabled-themes (quote (wombat)))
  '(custom-safe-themes
    (quote
     ("1b4ebe753ab8c750ba014c0e80c0c5272b63f1a6e0cba0e0d992e34d36203ee6" default)))
