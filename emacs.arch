@@ -1,3 +1,7 @@
+;;;;;;;;;;;;;;;env
+(setenv "PATH" (concat "/usr/local/bin/:" (getenv "PATH") ))
+(setq exec-path (append  '("/usr/local/bin") exec-path))
+(add-to-list 'load-path "~/.emacs.d/site-list")
 ;;;;;;;;;;;;;;;el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
@@ -34,13 +38,10 @@
 
 ;(setq-default default-directory "~/")
 ;(setq command-line-default-directory "~/")
-					;pretty symbo
+;(setq paredit-mode t)
+;(paredit-mode)
+(flyspell-prog-mode)
 (global-prettify-symbols-mode 1)
-(setenv "PATH" (concat "/usr/local/bin/:" (getenv "PATH") ))
-(setq exec-path (append  '("/usr/local/bin") exec-path))
-(add-to-list 'load-path "~/.emacs.d/site-list")
-					;global key set
-
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (setq user-full-name "fikgol")
@@ -205,7 +206,7 @@
             (setq py-autopep8-options '("--max-line-length=100"))
             (add-to-list 'write-file-functions 'delete-trailing-whitespace)
             (local-set-key (kbd "C-c p") 'hohe2-lookup-pydoc)
-            (add-hook 'before-save-hook 'py-autopep8-buffer nil t);install py-autopep8
+            ;(add-hook 'before-save-hook 'py-autopep8-buffer nil t);install py-autopep8
             ))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;jdee
@@ -218,7 +219,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
 (set-face-attribute 'default nil
- 		    :family "PragmataPro" :height 140 :weight 'normal)
+ 		    :family "PragmataPro" :height 120 :weight 'normal)
 ;; (set-fontset-font
 ;;  (frame-parameter nil 'font)
 ;;  'han
@@ -256,7 +257,7 @@
 (add-to-list 'load-path "~/.emacs.d/auto-save-list/")
 (autoload 'dash-at-point "dash-at-point"
   "Search the word at point with Dash." t nil)
-(global-set-key "\C-c\C-da" 'dash-at-point)
+(global-set-key "\C-c\C-s" 'dash-at-point)
 (global-set-key "\C-c\C-p" 'dash-at-point-with-docset)
 ;;;;;;;;;;;;dash;;;;;;
 ;;;;;;gnuplot mode
