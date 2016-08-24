@@ -1,6 +1,7 @@
 ;;;;;;;;;;;;;;;env
-(setenv "PATH" (concat "/usr/local/bin/:" (getenv "PATH") ))
-(setq exec-path (append  '("/usr/local/bin") exec-path))
+;(setenv "PATH" (concat "/usr/local/bin/:" (getenv "PATH") ))
+(setq exec-path (append  '("/usr/local/bin" "~/opt/gobase/bin") exec-path))
+
 (add-to-list 'load-path "~/.emacs.d/site-list")
 ;;;;;;;;;;;;;;;el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -31,9 +32,9 @@
   (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
 			   ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
 			   ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-			   ;("gnu" . "https://elpa.gnu.org/packages/")
-			   ;("melpa" . "https://melpa.org/packages/")
-			   ;("marmalade" . "https://marmalade-repo.org/packages/")
+			   ("gnu" . "https://elpa.gnu.org/packages/")
+			   ("melpa" . "https://melpa.org/packages/")
+			   ("marmalade" . "https://marmalade-repo.org/packages/")
 			   )))
 
 ;(setq-default default-directory "~/")
@@ -198,12 +199,13 @@
           (lambda ()
             (setq elpy-rpc-python-command "python2")
             (elpy-enable)
+	    (auto-complete-mode nil)
             (setq indent-tabs-mode nil)
             (setq tab-width 4)
             (setq-default python-indent 4)
             (setq-default py-indent-offset 4)
             (setq py-guess-indent-offset 4)
-            (setq py-autopep8-options '("--max-line-length=100"))
+            (setq py-autopep8-options '("--max-line-length=79"))
             (add-to-list 'write-file-functions 'delete-trailing-whitespace)
             (local-set-key (kbd "C-c p") 'hohe2-lookup-pydoc)
             ;(add-hook 'before-save-hook 'py-autopep8-buffer nil t);install py-autopep8
@@ -219,7 +221,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
 (set-face-attribute 'default nil
- 		    :family "PragmataPro" :height 160 :weight 'normal)
+ 		    :family "PragmataPro" :height 110 :weight 'normal)
 ;; (set-fontset-font
 ;;  (frame-parameter nil 'font)
 ;;  'han
@@ -238,7 +240,7 @@
  '(custom-enabled-themes (quote (wombat)))
  '(custom-safe-themes
    (quote
-    ("1b4ebe753ab8c750ba014c0e80c0c5272b63f1a6e0cba0e0d992e34d36203ee6" default)))
+    ("c5434867f8dd2659de03a1c8f6cc3679a2e7d8bf941a07c576ffecd49ef89868" "3038a172e5b633d0b1ee284e6520a73035d0cb52f28b1708e22b394577ad2df1" "1b4ebe753ab8c750ba014c0e80c0c5272b63f1a6e0cba0e0d992e34d36203ee6" default)))
  '(display-time-mode t)
  '(safe-local-variable-values (quote ((encoding . utf-8))))
  '(show-paren-mode t)

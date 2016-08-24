@@ -1,16 +1,12 @@
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
-
-xscreensaver -no-splash &
+export LC_CTYPE="zh_CN.UTF-8"
+#xscreensaver -no-splash &
 sawfish &
 xfce-mcs-manager
 xfce4-power-manager
 xfce4-session &
-# xmodmap ~/etc/xmodmap >/dev/null 2>&1
+xrandr  --output HDMI1   --panning 1920x1080+3840+0 --scale 2x2
 exec xfdesktop
 # exec startkde
-# export XDG_CURRENT_DESKTOP=GNOME-Classic:GNOME
-# export GNOME_SHELL_SESSION_MODE=classic
-# exec gnome-session --session=gnome-classic
-
