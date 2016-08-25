@@ -137,6 +137,9 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;org-mode
+(setq org-html-validation-link nil)
+(setq org-export-html-postamble nil)
+
 ;;org-todo set
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 (setq org-agenda-files (list "~/documents/org/agenda/"))
@@ -221,7 +224,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
 (set-face-attribute 'default nil
- 		    :family "PragmataPro" :height 110 :weight 'normal)
+ 		    :family "PragmataPro" :height 170 :weight 'normal)
 ;; (set-fontset-font
 ;;  (frame-parameter nil 'font)
 ;;  'han
@@ -317,11 +320,11 @@
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;; xelatex ==========================
-;;add this to support chinese
-;;#+LATEX_HEADER:\usepackage{fontspec}
-;;#+LATEX_HEADER: \setromanfont{Songti TC}
-;;#+LATEX_HEADER:\XeTeXlinebreaklocale "zh"
-;;#+LATEX_HEADER:\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+;; add this to support chinese
+;; #+LATEX_HEADER:\usepackage{fontspec}
+;; #+LATEX_HEADER: \setromanfont{Songti TC}
+;; #+LATEX_HEADER:\XeTeXlinebreaklocale "zh"
+;; #+LATEX_HEADER:\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
 ;; beamer support for chinese
 ;; #+LATEX_HEADER: \usepackage{xeCJK}
 ;; #+LATEX_HEADER: \setCJKmainfont{STHeiti:style=Light}
@@ -333,12 +336,36 @@
 ;; #+LaTeX_CLASS: beamer
 ;; #+LaTeX_CLASS_OPTIONS: [bigger]
 
-(setq latex-run-command "xelatex")
-(setq org-latex-to-pdf-process '("xelatex %f"))
+;; (setq latex-run-command "xelatex")
+;; (setq org-latex-to-pdf-process '("xelatex %f"))
 
 ;; evaluation for dot
 ;; 1.C-c C-c to evaluate dot code
 ;; 2.C-c C-x C-v to toggle display of inline images
+;;;;;;;;;;;;;;;;;;;;;;;;image-base64;;;;;;;;;;;;;;;;;;;;;;;
+;; #+BEGIN_SRC python :results output raw :exports results
+;; with open('eg-cors-1.png', 'rb') as image:
+;;   from base64 import b64encode
+;;   data = image.read()
+;;   print '<img width="1000px" height="800px" src="data:image/*;base64,%s">' % b64encode(data)
+;; #+END_SRC
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;latex pdf;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; #+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:nil
+;; #+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:t
+;; #+OPTIONS: e:t email:nil f:t inline:t num:nil p:nil pri:nil stat:t
+;; #+OPTIONS: tags:t tasks:t tex:t timestamp:t toc:nil todo:t |:t
+;; #+DESCRIPTION:
+;; #+KEYWORDS:
+;; #+LANGUAGE: en
+;; #+SELECT_TAGS: export
+;; #+LATEX_CLASS: article
+;; #+LATEX_CLASS_OPTIONS:
+;; #+LATEX_HEADER: \usepackage{fontspec}
+;; #+LATEX_HEADER: \setromanfont{STHeiti:style=Light}
+;; #+LATEX_HEADER:\XeTeXlinebreaklocale "zh"
+;; #+LATEX_HEADER:\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+;; #+LATEX_HEADER_EXTRA:
+
 
 (org-babel-do-load-languages
  'org-babel-load-languages
