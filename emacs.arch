@@ -30,8 +30,8 @@
   (require 'package)
   (package-initialize)
   (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			   ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-			   ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+			   ;("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+			   ;("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
 			   ("gnu" . "https://elpa.gnu.org/packages/")
 			   ("melpa" . "https://melpa.org/packages/")
 			   ("marmalade" . "https://marmalade-repo.org/packages/")
@@ -111,9 +111,10 @@
 					  (delete-window)))))
 	   (goto-char (point-min))))))))
 ;;设置tab为4个空格的宽度
-(setq indent-tabs-mode nil)
-(setq tab-width 4)
-
+(setq-default indent-tabs-mode nil)
+;(standard-display-ascii ?\t "^I")
+(setq-default tab-width 4)
+(setq highlight-indentation-mode t)
 ;;备份设置
 (setq
  backup-by-copying t ; 自动备份
@@ -224,7 +225,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
 (set-face-attribute 'default nil
- 		    :family "PragmataPro" :height 170 :weight 'normal)
+ 		    :family "PragmataPro" :height 120 :weight 'normal)
 ;; (set-fontset-font
 ;;  (frame-parameter nil 'font)
 ;;  'han
@@ -264,6 +265,7 @@
   "Search the word at point with Dash." t nil)
 (global-set-key "\C-c\C-s" 'dash-at-point)
 (global-set-key "\C-c\C-p" 'dash-at-point-with-docset)
+(global-set-key "\C-c\C-s" 'zeal-at-point)
 ;;;;;;;;;;;;dash;;;;;;
 ;;;;;;gnuplot mode
 (require 'gnuplot-mode)
@@ -375,7 +377,7 @@
 (add-hook 'html-mode-hook
 	  (lambda()
 	    (setq sgml-basic-offset 4)
-	    (setq indent-tabs-mode t)))
+	    (setq indent-tabs-mode nil)))
 
 
 ;;org-present
@@ -455,3 +457,4 @@ type=\"text/css\"/>"
 	    ))
 ;;;;;;;;;;;;;;sawfish-mode;;;;;;;;;;;;;;;;;
 (autoload 'sawfish-mode "sawfish" "sawfish-mode" t)
+(put 'upcase-region 'disabled nil)
