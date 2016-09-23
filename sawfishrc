@@ -3,7 +3,7 @@
 (bind-keys global-keymap
 	   "Super-c" `(jump-or-exec "Chromium" "chromium")
 	   "Super-t" `(jump-or-exec "term" "lilyterm")
-	   "Super-e" `(jump-or-exec "emacs@" "LC_CTYPE=en_US.UTF-8 emacs")
+	   "Super-e" `(jump-or-exec "emacs@" "LC_CTYPE=zh_CN.UTF-8 emacs")
 	   "Super-m" `(jump-or-exec "ThunderBird" "thunderbird"))
 
 ;;============workspace==========
@@ -109,14 +109,14 @@
 ;; (add-hook 'workspace-state-change-hook workspace-background-customize-hook)
 
 ;;================tiling==================
-(require 'sawfish.wm.tile.tile)
-(tall-tiling 0 #:width 1.75 #:top 0 #:bottom 0 #:gap 4 #:max 4 #:right t #:resize t #:auto t)
-(col-tiling 0 #:top 0 #:bottom 0 #:gap 3 #:cols 3 #:resize t)
-(bind-keys global-keymap
-	   "C-S-KP_Add" 'increase-max-windows
-	   "C-S-KP_Subtract" 'decrease-max-windows
-	   "C-M-KP_Add" 'increase-cols
-	   "C-M-KP_Subtract" 'decrease-cols
-	   "C-M-Right" 'tall-rotate-right
-	   "C-M-Left" 'tall-rotate-left
-	   "C-F11" 'next-tiling)
+;; (require 'sawfish.wm.tile.tile)
+;; (tall-tiling 0 #:width 1.75 #:top 0 #:bottom 0 #:gap 4 #:max 4 #:right t #:resize t #:auto t)
+;; (col-tiling 0 #:top 0 #:bottom 0 #:gap 3 #:cols 3 #:resize t)
+;; (bind-keys global-keymap
+;; 	   "C-S-KP_Add" 'increase-max-windows
+;; 	   "C-S-KP_Subtract" 'decrease-max-windows
+;; 	   "C-M-KP_Add" 'increase-cols
+;; 	   "C-M-KP_Subtract" 'decrease-cols
+;; 	   "C-M-Right" 'tall-rotate-right
+;; 	   "C-M-Left" 'tall-rotate-left
+;; 	   "C-F11" 'next-tiling)
