@@ -1,0 +1,25 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+127.0.0.1       fikgol_pro
+192.168.1.111 nuch
+54.149.213.27 aws0
+54.186.90.102 aws-ub
+209.9.106.83 qin0
+139.198.1.239 qin2
+106.38.249.216  jenkins jenkins.qingyun.com
+172.16.60.2 git.internal.yunify.com
+172.16.0.3 boss.qingcloud.com
+220.181.27.101 zw-firstbox
+192.168.7.5 docs.qingcache.com
+139.198.1.252 api.qingcache.com
+139.198.0.10 pek3a-firstbox
+119.254.101.59 publisher
+172.16.80.11 board.qingstor.dev 
+
