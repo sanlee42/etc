@@ -1,2 +1,1 @@
-# etc
-etc  of my arch and osx
+Configures of my arch and osx.
