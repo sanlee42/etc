@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;env
 ;(setenv "PATH" (concat "/usr/local/bin/:" (getenv "PATH") ))
-(setq exec-path (append  '("/usr/local/bin" "~/opt/gobase/bin") exec-path))
+(setq exec-path (append  '("/usr/bin/" "/usr/local/bin" "~/opt/gobase/bin" "~/workspaces/gopjt/bin") exec-path))
 
 (add-to-list 'load-path "~/.emacs.d/site-list")
 ;;;;;;;;;;;;;;;el-get
@@ -9,10 +9,10 @@
 (with-current-buffer
 (url-retrieve-synchronously
 	       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-        (goto-char (point-max))
+       (goto-char (point-max))
 		(eval-print-last-sexp)))
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get/el-get-user/recipes")
-(el-get 'sync)
+;(el-get 'sync)
 
 ;;;;;;;;;;;;;;;;;;;;;;;; mac specific settings
 (when (eq system-type 'darwin)
@@ -30,11 +30,11 @@
   (require 'package)
   (package-initialize)
   (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			   ;("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-			   ;("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+			   ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+			   ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
 			   ("gnu" . "https://elpa.gnu.org/packages/")
-			   ("melpa" . "https://melpa.org/packages/")
-			   ("marmalade" . "https://marmalade-repo.org/packages/")
+			   ;("melpa" . "https://melpa.org/packages/")
+			   ;("marmalade" . "https://marmalade-repo.org/packages/")
 			   )))
 
 ;(setq-default default-directory "~/")
@@ -53,8 +53,6 @@
 (global-set-key "\M-h" 'backward-kill-word)
 (global-set-key (kbd "C-c r") 'rename-buffer)
 (global-set-key "\M-`" nil)
-(global-set-key "\M-*" 'pop-tag-mark)
-
 ;;(setq shell-file-name "/bin/bash")
 ;;以server模式启动
 ;;(server-start)
@@ -113,10 +111,9 @@
 					  (delete-window)))))
 	   (goto-char (point-min))))))))
 ;;设置tab为4个空格的宽度
-(setq-default indent-tabs-mode nil)
-;(standard-display-ascii ?\t "^I")
-(setq-default tab-width 4)
-(setq highlight-indentation-mode t)
+(setq indent-tabs-mode nil)
+(setq tab-width 4)
+
 ;;备份设置
 (setq
  backup-by-copying t ; 自动备份
@@ -161,7 +158,7 @@
 ;; 1.Pymacs.(make&&python setup.py install)
 ;; 2.rope (python setup.py install)
 ;; 3.ropemacs(python setup.py install)
-;; now,jus el-get install ropymacs
+;; now,just el-get install ropymacs
 
 ;;complete use M-/
 ;; config the ~/.ropeproject/config.py, to add the path of python lib but,Defalut is not need:
@@ -214,6 +211,7 @@
             (setq py-autopep8-options '("--max-line-length=79"))
             (add-to-list 'write-file-functions 'delete-trailing-whitespace)
             (local-set-key (kbd "C-c p") 'hohe2-lookup-pydoc)
+	    (local-set-key (kbd "M-n") (next-mode-buffer "py"))
             ;(add-hook 'before-save-hook 'py-autopep8-buffer nil t);install py-autopep8
             ))
 
@@ -227,7 +225,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
 (set-face-attribute 'default nil
- 		    :family "PragmataPro" :height 115 :weight 'normal)
+ 		    :family "PragmataPro" :height 150 :weight 'normal)
 ;; (set-fontset-font
 ;;  (frame-parameter nil 'font)
 ;;  'han
@@ -238,21 +236,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- 
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["black" "#d55e00" "#009e73" "#f8ec59" "#0072b2" "#cc79a7" "#56b4e9" "white"])
+ '(column-number-mode t)
  '(custom-enabled-themes (quote (wombat)))
  '(custom-safe-themes
    (quote
     ("c5434867f8dd2659de03a1c8f6cc3679a2e7d8bf941a07c576ffecd49ef89868" "3038a172e5b633d0b1ee284e6520a73035d0cb52f28b1708e22b394577ad2df1" "1b4ebe753ab8c750ba014c0e80c0c5272b63f1a6e0cba0e0d992e34d36203ee6" default)))
- 
- '(column-number-mode t)
  '(display-time-mode t)
  '(package-selected-packages
    (quote
-    (lua-mode w3 zeal-at-point pymacs pylint py-autopep8 paredit magit ivy inkpot-theme go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gitlab elpy color-theme-vim-insert-mode)))
+    (yasnippet-bundle w3m smartparens scala-mode2 sbt-mode robots-txt-mode python-docstring pyenv-mode py-autopep8 paredit ox-rst ox-reveal org-tree-slide org-present org-ac nose markdown-mode magit-gitflow magit-gerrit lua-mode json-mode jedi-direx helm-gitlab helm-cscope haskell-mode graphviz-dot-mode golint  go-rename go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gnuplot git flymake-python-pyflakes exec-path-from-shell elpy elpa-mirror elein color-theme clojure-cheatsheet auto-yasnippet ac-cider 4clojure)))
  '(safe-local-variable-values (quote ((encoding . utf-8))))
  '(show-paren-mode t)
  '(size-indication-mode t)
@@ -272,7 +268,6 @@
   "Search the word at point with Dash." t nil)
 (global-set-key "\C-c\C-s" 'dash-at-point)
 (global-set-key "\C-c\C-p" 'dash-at-point-with-docset)
-(global-set-key "\C-c\C-s" 'zeal-at-point)
 ;;;;;;;;;;;;dash;;;;;;
 ;;;;;;gnuplot mode
 (require 'gnuplot-mode)
@@ -384,7 +379,7 @@
 (add-hook 'html-mode-hook
 	  (lambda()
 	    (setq sgml-basic-offset 4)
-	    (setq indent-tabs-mode nil)))
+	    (setq indent-tabs-mode t)))
 
 
 ;;org-present
@@ -461,7 +456,30 @@ type=\"text/css\"/>"
 	  (lambda ()
 	    (setq tab-width 4)
 	    (add-hook 'after-save-hook 'gofmt-before-save)
+	    (local-set-key (kbd "M-n") (next-mode-buffer "go"))
 	    ))
 ;;;;;;;;;;;;;;sawfish-mode;;;;;;;;;;;;;;;;;
 (autoload 'sawfish-mode "sawfish" "sawfish-mode" t)
 (put 'upcase-region 'disabled nil)
+;;;;;;;;;;;;;;;draft;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(yas-minor-mode)
+(global-set-key (kbd "M-*") 'pop-tag-mark)
+(global-set-key (kbd "M-p") 'previous-buffer)
+
+;; Unconditionally kill unmodified buffers.
+(defun volatile-kill-buffer ()
+   "Kill current buffer unconditionally."
+   (interactive)
+   (let ((buffer-modified-p nil))
+     (kill-buffer (current-buffer))))
+(global-set-key (kbd "C-x k") 'volatile-kill-buffer)
+
+;; Move to the next buffer with the spec suffix
+(defun next-mode-buffer (mode-suffix)
+  (lexical-let ((mode-suffix mode-suffix))
+    (lambda (&optional windows)
+      (interactive)
+      (switch-to-buffer (car (cdr
+			      (seq-filter
+			       (lambda (x) (string-suffix-p (concat "." mode-suffix) (buffer-name x)))
+			       (buffer-list))))))))
