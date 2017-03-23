@@ -465,6 +465,7 @@ type=\"text/css\"/>"
 (yas-minor-mode)
 (global-set-key (kbd "M-*") 'pop-tag-mark)
 (global-set-key (kbd "M-p") 'previous-buffer)
+(global-set-key (kbd "M-n") 'previous-buffer)
 
 ;; Unconditionally kill unmodified buffers.
 (defun volatile-kill-buffer ()
@@ -475,11 +476,31 @@ type=\"text/css\"/>"
 (global-set-key (kbd "C-x k") 'volatile-kill-buffer)
 
 ;; Move to the next buffer with the spec suffix
+(defun find-match(l mode-suffix)
+  (when l
+    (if (string-suffix-p mode-suffix (car l))
+	(car l)
+      (find-match (cdr l) mode-suffix))))
+
+(defun find-match-after-current(l mode-suffix)
+  (setq-local local-pos (seq-position l  (buffer-name (current-buffer))))
+  (setq-local next-l
+	      (seq-concatenate
+	       'list
+	       (seq-subseq l  (+ 1 local-pos))
+	      (seq-subseq l 0 local-pos))
+	      )
+  (find-match next-l mode-suffix)
+  )
+
+(defun swtich-to-next-mode-buffer (mode-suffix)
+  (setq-local sort-l (sort (mapcar 'buffer-name (buffer-list)) 'string<))
+  (setq-local dst-buffer (find-match-after-current sort-l mode-suffix))
+  (switch-to-buffer dst-buffer)
+  )
+
 (defun next-mode-buffer (mode-suffix)
   (lexical-let ((mode-suffix mode-suffix))
     (lambda (&optional windows)
       (interactive)
-      (switch-to-buffer (car (cdr
-			      (seq-filter
-			       (lambda (x) (string-suffix-p (concat "." mode-suffix) (buffer-name x)))
-			       (buffer-list))))))))
+      (swtich-to-next-mode-buffer mode-suffix))))
