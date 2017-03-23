@@ -43,8 +43,6 @@
 ;(paredit-mode)
 (flyspell-prog-mode)
 (global-prettify-symbols-mode 1)
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (setq user-full-name "fikgol")
 (setq user-mail-address "hit.cs.lijun@gmail.com")
 (global-set-key "\C-c\C-c" 'comment-region)
@@ -67,8 +65,8 @@
 (global-font-lock-mode t)
 ;;ctrl-shift-space to set-mark
 (global-set-key [?\s- ] 'set-mark-command)
-;;c-x b
-(iswitchb-mode 1)
+;; ;;c-x b
+;; (iswitchb-mode 1)
 ;;c-c c-b;c-x c-f
 (require 'bs)
 (global-set-key (kbd "C-c C-b") 'bs-show)
@@ -504,3 +502,18 @@ type=\"text/css\"/>"
     (lambda (&optional windows)
       (interactive)
       (swtich-to-next-mode-buffer mode-suffix))))
+
+;; enable or not,it does not matter.
+(helm-mode t)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; elisp
+(add-hook 'emacs-lisp-mode-hook
+	  (lambda ()
+	    ;(smartparens-mode)
+        (paredit-mode t)
+	(company-mode t)
+	(eldoc-mode t)))
+
+;; do not ask me "symbolic link to git-controlled source file ..."
+(setq vc-follow-symlinks nil)
