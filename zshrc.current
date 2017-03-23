@@ -81,7 +81,7 @@ export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
 
 # defalut editor
-export EDITOR="/Applications/Emacs\ 2.app/Contents/MacOS/bin/emacsclient -t"
+export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t"
 # export EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs -nw "$@""
 # core
 ulimit -c unlimited
@@ -91,7 +91,7 @@ alias tgz='tar -xzvf'
 alias px="ps aux|grep "
 alias proxy="~/opt/goagent/local/proxy.sh"
 alias rmr="rm -r "
-alias emacs="/Applications/Emacs\ 2.app/Contents/MacOS/Emacs -nw "$@""
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw "$@""
 alias mm="ssh supertool@192.168.1.108"
 alias em='/Applications/Emacs\ 2.app/Contents/MacOS/bin/emacsclient -t'
 alias emc='/Applications/Emacs\ 2.app/Contents/MacOS/bin/emacsclient -nc &'
