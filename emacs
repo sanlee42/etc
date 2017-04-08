@@ -1,8 +1,6 @@
 ;;;;;;;;;;;;;;;env
-;(setenv "PATH" (concat "/usr/local/bin/:" (getenv "PATH") ))
-(setq exec-path (append  '("/usr/bin/" "/usr/local/bin" "~/opt/gobase/bin" "~/workspaces/gopjt/bin") exec-path))
+(setq exec-path (append  '("/usr/bin/" "/usr/local/bin" "~/workspaces/gopjt/bin") exec-path))
 
-(add-to-list 'load-path "~/.emacs.d/site-list")
 ;;;;;;;;;;;;;;;el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
@@ -10,9 +8,12 @@
 (url-retrieve-synchronously
 	       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
        (goto-char (point-max))
-		(eval-print-last-sexp)))
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get/el-get-user/recipes")
-;(el-get 'sync)
+(eval-print-last-sexp)))
+
+(setq my-el-get-packages
+      '(auto-complete cl-lib company-mode el-get fuzzy gnuplot-mode go-autocomplete go-company go-def go-mode paredit popup pymacs rope ropemacs ropemode yasnippet))
+
+(el-get 'sync my-el-get-packages)
 
 ;;;;;;;;;;;;;;;;;;;;;;;; mac specific settings
 (when (eq system-type 'darwin)
@@ -25,7 +26,7 @@
 ;;   (setq x-super-keysym 'meta)
 ;;   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;初始设置
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;mirrors
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
@@ -36,11 +37,7 @@
 			   ("melpa" . "https://melpa.org/packages/")
 			   ("marmalade" . "https://marmalade-repo.org/packages/")
 			   )))
-
-;(setq-default default-directory "~/")
-;(setq command-line-default-directory "~/")
-;(setq paredit-mode t)
-;(paredit-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (flyspell-prog-mode)
 (global-prettify-symbols-mode 1)
 (setq user-full-name "fikgol")
@@ -54,6 +51,9 @@
 ;;(setq shell-file-name "/bin/bash")
 ;;以server模式启动
 ;;(server-start)
+(put 'set-goal-column 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+(add-to-list 'load-path "~/.emacs.d/auto-save-list/")
 (require 'linum) ;显示列号
 (global-linum-mode 1)
 (setq column-number-mode t)
@@ -153,18 +153,12 @@
 					;org-export set
 (setq org-image-actual-width nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;python coding
-;; 1.Pymacs.(make&&python setup.py install)
-;; 2.rope (python setup.py install)
-;; 3.ropemacs(python setup.py install)
-;; now,just el-get install ropymacs
-
 ;;complete use M-/
 ;; config the ~/.ropeproject/config.py, to add the path of python lib but,Defalut is not need:
 ;;such as  prefs.add('python_path','/usr/lib/python2.7')
 ;;show the document use c-c d;c-c p to lookup pydoc; M-/ to rope complete
 
-;; (require 'pymacs)
-;; ;; Initialize Pymacs
+(require 'pymacs)
 (autoload 'pymacs-apply "pymacs")
 (autoload 'pymacs-call "pymacs")
 (autoload 'pymacs-eval "pymacs" 0 t)
@@ -213,73 +207,54 @@
             ;(add-hook 'before-save-hook 'py-autopep8-buffer nil t);install py-autopep8
             ))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;jdee
-;; (add-to-list 'load-path "~/.emacs.d/auto-save-list/jdee-2.4.1/lisp")
-;; (setq jde-help-remote-file-exists-function '("beanshell"))
-;; 					;(load "jde")
-;; (autoload 'jde-mode "jde" "JDE mode" t t)
-;; (setq auto-mode-alist
-;;       (append '(("\\.java" . jde-mode)) auto-mode-alist))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
 (set-face-attribute 'default nil
- 		    :family "PragmataPro" :height 150 :weight 'normal)
-;; (set-fontset-font
-;;  (frame-parameter nil 'font)
-;;  'han
-;;  (font-spec :family "Hiragino Sans GB" ))
-;; 					;color-theme
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["black" "#d55e00" "#009e73" "#f8ec59" "#0072b2" "#cc79a7" "#56b4e9" "white"])
- '(column-number-mode t)
- '(custom-enabled-themes (quote (wombat)))
- '(custom-safe-themes
-   (quote
-    ("c5434867f8dd2659de03a1c8f6cc3679a2e7d8bf941a07c576ffecd49ef89868" "3038a172e5b633d0b1ee284e6520a73035d0cb52f28b1708e22b394577ad2df1" "1b4ebe753ab8c750ba014c0e80c0c5272b63f1a6e0cba0e0d992e34d36203ee6" default)))
- '(display-time-mode t)
- '(package-selected-packages
-   (quote
-    (company-go markdown-preview-mode markdown-preview-eww org-preview-html go-guru yasnippet-bundle w3m smartparens scala-mode2 sbt-mode robots-txt-mode python-docstring pyenv-mode py-autopep8 paredit ox-rst ox-reveal org-tree-slide org-present org-ac nose markdown-mode magit-gitflow magit-gerrit lua-mode json-mode jedi-direx helm-gitlab helm-cscope haskell-mode graphviz-dot-mode golint go-rename go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gnuplot git flymake-python-pyflakes exec-path-from-shell elpy elpa-mirror elein color-theme clojure-cheatsheet auto-yasnippet ac-cider 4clojure)))
- '(safe-local-variable-values (quote ((encoding . utf-8))))
- '(show-paren-mode t)
- '(size-indication-mode t)
- '(sp-base-key-bindings (quote paredit))
- '(tex-run-command "xelatex")
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-(put 'erase-buffer 'disabled nil)
+ 		    :family "PragmataPro" :height 100 :weight 'normal)
+;; (custom-set-variables
+;;  ;; custom-set-variables was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(ansi-color-faces-vector
+;;    [default default default italic underline success warning error])
+;;  '(ansi-color-names-vector
+;;    ["black" "#d55e00" "#009e73" "#f8ec59" "#0072b2" "#cc79a7" "#56b4e9" "white"])
+;;  '(column-number-mode t)
+;;  '(custom-enabled-themes (quote (wombat)))
+;;  '(custom-safe-themes
+;;    (quote
+;;     ("c5434867f8dd2659de03a1c8f6cc3679a2e7d8bf941a07c576ffecd49ef89868" "3038a172e5b633d0b1ee284e6520a73035d0cb52f28b1708e22b394577ad2df1" "1b4ebe753ab8c750ba014c0e80c0c5272b63f1a6e0cba0e0d992e34d36203ee6" default)))
+;;  '(display-time-mode t)
+;;  '(safe-local-variable-values (quote ((encoding . utf-8))))
+;;  '(show-paren-mode t)
+;;  '(size-indication-mode t)
+;;  '(sp-base-key-bindings (quote paredit))
+;;  '(tex-run-command "xelatex")
+;;  '(tool-bar-mode nil))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  )
+
+
 ;;;;;;;;;;;;;dash;;;;;
-(add-to-list 'load-path "~/.emacs.d/auto-save-list/")
 (autoload 'dash-at-point "dash-at-point"
   "Search the word at point with Dash." t nil)
 (global-set-key "\C-c\C-s" 'dash-at-point)
 (global-set-key "\C-c\C-p" 'dash-at-point-with-docset)
-;;;;;;;;;;;;dash;;;;;;
+
+
 ;;;;;;gnuplot mode
-(require 'gnuplot-mode)
+(require 'gnuplot)
 (local-set-key "\M-\C-g" 'org-plot/gnuplot)
 (autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
 (autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot-mode" t)
 (setq auto-mode-alist (append '(("\\.gp$" . gnuplot-mode))
 			      auto-mode-alist))
-;;;;;;gnuplot mode
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;org mode
-
-
 (add-hook 'org-mode-hook (lambda ()
 			   (setq truncate-lines nil)))
 (setq org-src-fontify-natively t)
@@ -432,44 +407,29 @@ type=\"text/css\"/>"
 	    (setq company-mode t)
 	    (setq eldoc-mode t)))
 
-;;;;;;;;;;;;;;;;;;;;;;;clojure;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;emacs-git;;;;;;;;;;;
-(add-to-list 'load-path "~/.emacs.d/vendor/")
-(require 'gitlab)
-(setq gitlab-host "http://gitlab.baidu.com"
-      gitlab-username "lijun_iwm"
-      gitlab-password "b1231121")
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(put 'set-goal-column 'disabled nil)
 
 
 ;;;;;;;;;;;;golang;;;;;;;;;;;;;;
 (require 'go-autocomplete)
-(require 'auto-complete-config)
 (require 'go-guru)
-
-(ac-config-default)
-
-
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "GOPATH"))
 
 (add-hook 'go-mode-hook
 	  (lambda ()
 	    (setq tab-width 4)
 	    (add-hook 'after-save-hook 'gofmt-before-save)
 	    (local-set-key (kbd "M-n") (next-mode-buffer ".go"))
-	    ;(go-guru-hl-identifier-mode)
+	    (go-guru-hl-identifier-mode)
 	    (local-set-key (kbd "C-c C-j") 'go-guru-definition)
 	    ))
+;(go-gopath-set-gopath "~/workspaces/gopjt")
 
-(go-gopath-set-gopath "~/workspaces/gopjt")
 ;;;;;;;;;;;;;;sawfish-mode;;;;;;;;;;;;;;;;;
 (autoload 'sawfish-mode "sawfish" "sawfish-mode" t)
 (put 'upcase-region 'disabled nil)
+
 ;;;;;;;;;;;;;;;draft;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'yasnippet)
 (yas-minor-mode)
 (global-set-key (kbd "M-*") 'pop-tag-mark)
 (global-set-key (kbd "M-p") 'previous-buffer)
