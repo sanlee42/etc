@@ -33,8 +33,8 @@
 			   ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
 			   ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
 			   ("gnu" . "https://elpa.gnu.org/packages/")
-			   ;("melpa" . "https://melpa.org/packages/")
-			   ;("marmalade" . "https://marmalade-repo.org/packages/")
+			   ("melpa" . "https://melpa.org/packages/")
+			   ("marmalade" . "https://marmalade-repo.org/packages/")
 			   )))
 
 ;(setq-default default-directory "~/")
@@ -66,7 +66,7 @@
 ;;ctrl-shift-space to set-mark
 (global-set-key [?\s- ] 'set-mark-command)
 ;; ;;c-x b
-;; (iswitchb-mode 1)
+(iswitchb-mode 1)
 ;;c-c c-b;c-x c-f
 (require 'bs)
 (global-set-key (kbd "C-c C-b") 'bs-show)
@@ -246,7 +246,7 @@
  '(display-time-mode t)
  '(package-selected-packages
    (quote
-    (yasnippet-bundle w3m smartparens scala-mode2 sbt-mode robots-txt-mode python-docstring pyenv-mode py-autopep8 paredit ox-rst ox-reveal org-tree-slide org-present org-ac nose markdown-mode magit-gitflow magit-gerrit lua-mode json-mode jedi-direx helm-gitlab helm-cscope haskell-mode graphviz-dot-mode golint  go-rename go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gnuplot git flymake-python-pyflakes exec-path-from-shell elpy elpa-mirror elein color-theme clojure-cheatsheet auto-yasnippet ac-cider 4clojure)))
+    (company-go markdown-preview-mode markdown-preview-eww org-preview-html go-guru yasnippet-bundle w3m smartparens scala-mode2 sbt-mode robots-txt-mode python-docstring pyenv-mode py-autopep8 paredit ox-rst ox-reveal org-tree-slide org-present org-ac nose markdown-mode magit-gitflow magit-gerrit lua-mode json-mode jedi-direx helm-gitlab helm-cscope haskell-mode graphviz-dot-mode golint go-rename go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gnuplot git flymake-python-pyflakes exec-path-from-shell elpy elpa-mirror elein color-theme clojure-cheatsheet auto-yasnippet ac-cider 4clojure)))
  '(safe-local-variable-values (quote ((encoding . utf-8))))
  '(show-paren-mode t)
  '(size-indication-mode t)
@@ -446,6 +446,12 @@ type=\"text/css\"/>"
 
 ;;;;;;;;;;;;golang;;;;;;;;;;;;;;
 (require 'go-autocomplete)
+(require 'auto-complete-config)
+(require 'go-guru)
+
+(ac-config-default)
+
+
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "GOPATH"))
@@ -454,8 +460,12 @@ type=\"text/css\"/>"
 	  (lambda ()
 	    (setq tab-width 4)
 	    (add-hook 'after-save-hook 'gofmt-before-save)
-	    (local-set-key (kbd "M-n") (next-mode-buffer "go"))
+	    (local-set-key (kbd "M-n") (next-mode-buffer ".go"))
+	    ;(go-guru-hl-identifier-mode)
+	    (local-set-key (kbd "C-c C-j") 'go-guru-definition)
 	    ))
+
+(go-gopath-set-gopath "~/workspaces/gopjt")
 ;;;;;;;;;;;;;;sawfish-mode;;;;;;;;;;;;;;;;;
 (autoload 'sawfish-mode "sawfish" "sawfish-mode" t)
 (put 'upcase-region 'disabled nil)
@@ -493,6 +503,7 @@ type=\"text/css\"/>"
 
 (defun swtich-to-next-mode-buffer (mode-suffix)
   (setq-local sort-l (sort (mapcar 'buffer-name (buffer-list)) 'string<))
+  ;(setq-local l (mapcar 'buffer-name (buffer-list)))
   (setq-local dst-buffer (find-match-after-current sort-l mode-suffix))
   (switch-to-buffer dst-buffer)
   )
@@ -503,10 +514,9 @@ type=\"text/css\"/>"
       (interactive)
       (swtich-to-next-mode-buffer mode-suffix))))
 
-;; enable or not,it does not matter.
-(helm-mode t)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
+;(helm-mode nil)
+;(global-set-key (kbd "M-x") 'helm-M-x)
+;(global-set-key (kbd "C-x C-f") 'helm-find-files)
 ;; elisp
 (add-hook 'emacs-lisp-mode-hook
 	  (lambda ()
@@ -517,3 +527,5 @@ type=\"text/css\"/>"
 
 ;; do not ask me "symbolic link to git-controlled source file ..."
 (setq vc-follow-symlinks nil)
+;; disable scroball bar at right handle
+(scroll-bar-mode -1)

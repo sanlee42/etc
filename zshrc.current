@@ -48,7 +48,7 @@ ZSH_THEME="3den"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git autojump ruby svn python mvn history)
+plugins=(git autojump python history)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -78,34 +78,23 @@ export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 # custom config here........
 # make autojump to work
 #[[ -s /opt/local/etc/profile.d/autojump.zsh ]] && . /opt/local/etc/profile.d/autojump.zsh
-[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+# [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
 
 # defalut editor
 export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t"
-# export EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs -nw "$@""
+
 # core
 ulimit -c unlimited
 # alias
-alias share="python -m SimpleHTTPServer"
 alias tgz='tar -xzvf'
 alias px="ps aux|grep "
-alias proxy="~/opt/goagent/local/proxy.sh"
 alias rmr="rm -r "
-alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw "$@""
-alias mm="ssh supertool@192.168.1.108"
-alias em='/Applications/Emacs\ 2.app/Contents/MacOS/bin/emacsclient -t'
-alias emc='/Applications/Emacs\ 2.app/Contents/MacOS/bin/emacsclient -nc &'
 alias sudo='sudo '
-alias publish='git add . && git commit -a -m "." && git push  origin gh-pages'
-alias mpython='source ~/opt/opython/bin/activate'
-alias rcmd="mussh -H /home/lijun/opt/mussh/hosts -c"
-alias p="ps uax|grep "
+alias em="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
 # scala enviroment
 export SCALA_HOME="/Users/fikgol/opt/scala-2.10.1"
 export PATH=$PATH:$SCALA_HOME/bin
-# hadoop
-export HADOOP_HOME="/Users/fikgol/user/hadoop-2.2.0/"
-export PATH=$PATH:$HADOOP_HOME/bin
+
 # gopjt
 export PATH=$PATH:/Users/fikgol/workspaces/gopjt/bin
 
@@ -126,5 +115,3 @@ rmz()
     local id =$1
     ssh_with_username $id root
 }
-# export https_proxy=http://agent.baidu.com:8118
-# export http_proxy=http://agent.baidu.com:8118
