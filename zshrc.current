@@ -91,6 +91,8 @@ alias px="ps aux|grep "
 alias rmr="rm -r "
 alias sudo='sudo '
 alias em="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+alias timeout="gtimeout"
 # scala enviroment
 export SCALA_HOME="/Users/fikgol/opt/scala-2.10.1"
 export PATH=$PATH:$SCALA_HOME/bin
@@ -114,4 +116,8 @@ rmz()
 {
     local id =$1
     ssh_with_username $id root
+}
+
+query(){
+    find ./ -name $1
 }
