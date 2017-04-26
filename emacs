@@ -13,7 +13,7 @@
 (setq my-el-get-packages
       '(auto-complete cl-lib company-mode el-get fuzzy gnuplot-mode go-autocomplete go-company go-def go-mode paredit popup pymacs rope ropemacs ropemode yasnippet))
 
-(el-get 'sync my-el-get-packages)
+;(el-get 'sync my-el-get-packages)
 
 ;;;;;;;;;;;;;;;;;;;;;;;; mac specific settings
 (when (eq system-type 'darwin)
@@ -38,6 +38,7 @@
 			   ("marmalade" . "https://marmalade-repo.org/packages/")
 			   )))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(display-time-mode t)
 (flyspell-prog-mode)
 (global-prettify-symbols-mode 1)
 (setq user-full-name "fikgol")
@@ -206,37 +207,6 @@
 	    (local-set-key (kbd "M-n") (next-mode-buffer "py"))
             ;(add-hook 'before-save-hook 'py-autopep8-buffer nil t);install py-autopep8
             ))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
-(set-face-attribute 'default nil
- 		    :family "PragmataPro" :height 100 :weight 'normal)
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(ansi-color-faces-vector
-;;    [default default default italic underline success warning error])
-;;  '(ansi-color-names-vector
-;;    ["black" "#d55e00" "#009e73" "#f8ec59" "#0072b2" "#cc79a7" "#56b4e9" "white"])
-;;  '(column-number-mode t)
-;;  '(custom-enabled-themes (quote (wombat)))
-;;  '(custom-safe-themes
-;;    (quote
-;;     ("c5434867f8dd2659de03a1c8f6cc3679a2e7d8bf941a07c576ffecd49ef89868" "3038a172e5b633d0b1ee284e6520a73035d0cb52f28b1708e22b394577ad2df1" "1b4ebe753ab8c750ba014c0e80c0c5272b63f1a6e0cba0e0d992e34d36203ee6" default)))
-;;  '(display-time-mode t)
-;;  '(safe-local-variable-values (quote ((encoding . utf-8))))
-;;  '(show-paren-mode t)
-;;  '(size-indication-mode t)
-;;  '(sp-base-key-bindings (quote paredit))
-;;  '(tex-run-command "xelatex")
-;;  '(tool-bar-mode nil))
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  )
 
 
 ;;;;;;;;;;;;;dash;;;;;
@@ -489,3 +459,27 @@ type=\"text/css\"/>"
 (setq vc-follow-symlinks nil)
 ;; disable scroball bar at right handle
 (scroll-bar-mode -1)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
+(set-face-attribute 'default nil
+ 		    :family "PragmataPro" :height 140 :weight 'normal)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(custom-safe-themes
+   (quote
+    ("1b4ebe753ab8c750ba014c0e80c0c5272b63f1a6e0cba0e0d992e34d36203ee6" default)))
+ '(display-time-mode t)
+ '(package-selected-packages
+   (quote
+    (imenu-list yasnippet-bundle w3m swiper smartparens scala-mode2 sbt-mode robots-txt-mode python-docstring pyenv-mode py-autopep8 paredit ox-rst ox-reveal org-tree-slide org-preview-html org-present org-ac nurumacs nose markdown-preview-mode markdown-preview-eww magit-gitflow magit-gerrit lua-mode json-mode jedi-direx helm-gitlab helm-cscope haskell-mode graphviz-dot-mode golint go-rename go-guru go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gnuplot git flymake-python-pyflakes exec-path-from-shell elpy elpa-mirror elein company-go color-theme clojure-cheatsheet auto-yasnippet ac-cider 4clojure)))
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
