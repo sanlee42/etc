@@ -25,4 +25,6 @@
 220.181.27.100 qsportal.qingyun.com
 139.198.185.250 sh1a-firstbox
 139.198.185.12 demo-webhosting.yunify.com
-172.16.80.21    guides.qingstor.dev
+172.16.80.21 guides.qingstor.dev
+172.16.60.2 git.internal.yunify.com
+172.31.32.13 beta-firstbox
