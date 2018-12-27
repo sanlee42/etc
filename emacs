@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;env
 (setq exec-path (append  '("/usr/bin/" "/usr/local/bin" "~/workspaces/gopjt/bin") exec-path))
-
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin" ":/Applications/Racket v6.11/bin/"))
 ;;;;;;;;;;;;;;;el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
@@ -11,7 +11,7 @@
 (eval-print-last-sexp)))
 
 (setq my-el-get-packages
-      '(auto-complete cl-lib company-mode el-get fuzzy gnuplot-mode go-autocomplete go-company go-def go-mode paredit popup pymacs rope ropemacs ropemode yasnippet))
+      '(solidity-mode auto-complete cl-lib company-mode el-get fuzzy gnuplot-mode go-autocomplete go-company go-def go-mode paredit popup pymacs rope ropemacs ropemode yasnippet))
 
 ;(el-get 'sync my-el-get-packages)
 
@@ -49,7 +49,7 @@
 (global-set-key "\M-h" 'backward-kill-word)
 (global-set-key (kbd "C-c r") 'rename-buffer)
 (global-set-key "\M-`" nil)
-;;(setq shell-file-name "/bin/bash")
+;(setq shell-file-name "/bin/bash")
 ;;以server模式启动
 ;;(server-start)
 (put 'set-goal-column 'disabled nil)
@@ -461,7 +461,12 @@ type=\"text/css\"/>"
 (scroll-bar-mode -1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
 (set-face-attribute 'default nil
- 		    :family "PragmataPro" :height 160 :weight 'normal)
+ 		    :family "PragmataPro" :height 180 :weight 'normal)
+;; set chinese font
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font (frame-parameter nil 'font)
+;;                     charset
+;;                     (font-spec :family "PingFang SC" :size 16)))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -475,7 +480,7 @@ type=\"text/css\"/>"
  '(display-time-mode t)
  '(package-selected-packages
    (quote
-    (imenu-list yasnippet-bundle w3m swiper smartparens scala-mode2 sbt-mode robots-txt-mode python-docstring pyenv-mode py-autopep8 paredit ox-rst ox-reveal org-tree-slide org-preview-html org-present org-ac nurumacs nose markdown-preview-mode markdown-preview-eww magit-gitflow magit-gerrit lua-mode json-mode jedi-direx helm-gitlab helm-cscope haskell-mode graphviz-dot-mode golint go-rename go-guru go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gnuplot git flymake-python-pyflakes exec-path-from-shell elpy elpa-mirror elein company-go color-theme clojure-cheatsheet auto-yasnippet ac-cider 4clojure)))
+    (kotlin-mode imenu-list yasnippet-bundle w3m swiper smartparens scala-mode2 sbt-mode robots-txt-mode python-docstring pyenv-mode py-autopep8 paredit ox-rst ox-reveal org-tree-slide org-preview-html org-present org-ac nurumacs nose markdown-preview-mode markdown-preview-eww magit-gitflow magit-gerrit lua-mode json-mode jedi-direx helm-gitlab helm-cscope haskell-mode graphviz-dot-mode golint go-rename go-guru go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gnuplot git flymake-python-pyflakes exec-path-from-shell elpy elpa-mirror elein company-go color-theme clojure-cheatsheet auto-yasnippet ac-cider 4clojure)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -484,3 +489,24 @@ type=\"text/css\"/>"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+; solidity
+(el-get-reload 'solidity-mode);; Do not know why there need it but others don't;
+(require 'solidity-mode)
+;; (setq solidity-solc-path "/usr/local/bin/solc")
+;; (setq flycheck-solidity-solium-soliumrcfile "~/.soliumrc.json")
+;; (setq solidity-solium-path "/usr/local/bin/solium")
+;; (setq solidity-flycheck-solc-checker-active t)
+;; (setq solidity-flycheck-solium-checker-active t)
+
+;; (add-hook 'solidity-mode-hook
+;; 	(lambda ()
+;; 	(set (make-local-variable 'company-backends)
+;; 		(append '((company-solidity company-capf company-dabbrev-code))
+;; 			company-backends))))
+;; (require 'flycheck)
+
+
+;; load arc.el and auto run arc-mode when file is of .arc extension
+(load-file "~/.emacs.d/arc.el")
+(load-file "~/.emacs.d/inferior-arc.el")
+(add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
