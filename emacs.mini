@@ -1,0 +1,194 @@
+;;;;;;;;;;;;;;;;;;;;;;;; mac specific settings
+(when (eq system-type 'darwin)
+  (setq mac-option-modifier 'alt)
+  (setq mac-command-modifier 'meta)
+  (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+  )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(display-time-mode t)
+(global-prettify-symbols-mode 1)
+(setq user-full-name "fikgol")
+(setq user-mail-address "hit.cs.lijun@gmail.com")
+(global-set-key "\C-c\C-c" 'comment-region)
+(global-set-key "\C-c\C-v" 'uncomment-region)
+(global-set-key "\C-h" 'delete-backward-char)
+(global-set-key "\M-h" 'backward-kill-word)
+(global-set-key (kbd "C-c r") 'rename-buffer)
+(global-set-key "\M-`" nil)
+(put 'set-goal-column 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+(add-to-list 'load-path "~/.emacs.d/auto-save-list/")
+(require 'linum) ;显示列号
+(global-linum-mode 1)
+(setq column-number-mode t)
+(setq line-number-mode t)
+;;高亮显示成对括
+;; 以 y/n代表 yes/no
+(fset 'yes-or-no-p 'y-or-n-p)
+;;语法加亮
+(global-font-lock-mode t)
+;;ctrl-shift-space to set-mark
+(global-set-key [?\s- ] 'set-mark-command)
+;; ;;c-x b
+(iswitchb-mode 1)
+;;c-c c-b;c-x c-f
+(require 'bs)
+(global-set-key (kbd "C-c C-b") 'bs-show)
+(when (fboundp 'winner-mode)
+  (winner-mode)
+  (windmove-default-keybindings))
+(icomplete-mode)
+;;reflash the buffer
+(defun refresh-file ()
+  (interactive)
+  (revert-buffer t (not (buffer-modified-p)) t))
+(global-set-key [(control f5)] 'refresh-file)
+
+;;设置tab为4个空格的宽度
+(setq indent-tabs-mode nil)
+(setq tab-width 4)
+
+;;备份设置
+(setq
+ backup-by-copying t ; 自动备份
+ backup-directory-alist
+ '(("." . "~/.saves")) ; 自动备份在目录"~/.saves"下
+ delete-old-versions t ; 自动删除旧的备份文件
+ kept-new-versions 6 ; 保留最近的6个备份文件
+ kept-old-versions 2 ; 保留最早的2个备份文件
+ version-control t) ; 多次备份
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;org-mode
+(setq org-html-validation-link nil)
+(setq org-export-html-postamble nil)
+
+;;org-todo set
+(add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
+(setq org-agenda-files (list "~/documents/org/agenda/"))
+(global-set-key "\C-ca" 'org-agenda)
+(define-key global-map "\C-cl" 'org-store-link)
+					;todo done with time
+(setq org-log-done t)
+					;indented
+					;(setq org-startup-indented t)
+;;iimage mode
+(autoload 'iimage-mode "iimage" "Support Inline image minor mode." t)
+(autoload 'turn-on-iimage-mode "iimage" "Turn on Inline image minor mode." t)
+					;org-export set
+(setq org-image-actual-width nil)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;python coding
+;;complete use M-/
+;; config the ~/.ropeproject/config.py, to add the path of python lib but,Defalut is not need:
+;;such as  prefs.add('python_path','/usr/lib/python2.7')
+;;show the document use c-c d;c-c p to lookup pydoc; M-/ to rope complete
+
+;;;;;;;;;;;;;;;;;;;;;;;;org mode
+(add-hook 'org-mode-hook (lambda ()
+			   (setq truncate-lines nil)))
+(setq org-src-fontify-natively t)
+(setq org-log-done 'time)
+(setq org-log-done 'note)
+					; export html with custom inline css
+(defun my-inline-custom-css-hook ()
+  "insert custom inline css content into org export"
+  (let* ( (working-path (ignore-errors (file-name-directory (buffer-file-name))))
+	  (custom-css (concat working-path "style.css"))
+	  (custom-css-flag (and (not (null working-path)) (not (null (file-exists-p custom-css)))))
+	  (target-css (if custom-css-flag
+			  custom-css
+			"~/.emacs.d/org-style.css")))
+    ;; (setq org-export-html-style-include-default nil)
+    (setq org-html-head (concat
+			 "<style type=\"text/css\">\n"
+			 "<!--/*--><![CDATA[/*><!--*/\n"
+			 (with-temp-buffer
+			   (insert-file-contents target-css)
+			   (buffer-string))
+			 "/*]]>*/-->\n"
+			 "</style>\n"))))
+(add-hook 'org-mode-hook 'my-inline-custom-css-hook)
+
+;;;;;;;;;;;;;;;;;;;;;;html5 org-html5present
+					;(add-to-list 'load-path "~/.emacs.d/org-html5presentation.el")
+					;(require 'ox-html5presentation)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t)))
+
+;; html 4 space
+(add-hook 'html-mode-hook
+	  (lambda()
+	    (setq sgml-basic-offset 4)
+	    (setq indent-tabs-mode t)))
+
+
+
+;;org-publish
+(require 'ox-publish)
+(setq org-publish-project-alist
+      '(
+
+	;; ... add all the components here (see below)...
+	("org-notes"
+	 :base-directory "/Users/fikgol/documents/mysite/"
+	 :base-extension "org"
+	 :publishing-directory "/Users/fikgol/documents/mysite/publish_html"
+	 :recursive t
+	 :publishing-function org-html-publish-to-html
+	 :headline-levels 4             ; Just the default for this project.
+	 :auto-preamble t
+	 :auto-sitemap t                ; Generate sitemap.org automagically...
+	 :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+	 :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+	 :style "<link rel=\"stylesheet\"
+href=\"/Users/fikgol/documents/mysite/publish_html/css/stylesheet.css\"
+type=\"text/css\"/>"
+	 )
+	("org-static"
+	 :base-directory "/Users/fikgol/documents/mysite/"
+	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+	 :publishing-directory "/Users/fikgol/documents/mysite/publish_html"
+	 :recursive t
+	 :publishing-function org-publish-attachment
+	 )
+	("org" :components ("org-notes" "org-static"))
+	)
+      )
+
+;; do not ask me "symbolic link to git-controlled source file ..."
+(setq vc-follow-symlinks nil)
+;; disable scroball bar at right handle
+(scroll-bar-mode -1)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;display
+(set-face-attribute 'default nil
+ 		    :family "PragmataPro" :height 180 :weight 'normal)
+;set chinese font
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+                    charset
+                    (font-spec :family "PingFang SC" :size 16)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(custom-enabled-themes (quote (wombat)))
+ '(custom-safe-themes
+   (quote
+    ("1b4ebe753ab8c750ba014c0e80c0c5272b63f1a6e0cba0e0d992e34d36203ee6" default)))
+ '(display-time-mode t)
+ '(package-selected-packages
+   (quote
+    (kotlin-mode imenu-list yasnippet-bundle w3m swiper smartparens scala-mode2 sbt-mode robots-txt-mode python-docstring pyenv-mode py-autopep8 paredit ox-rst ox-reveal org-tree-slide org-preview-html org-present org-ac nurumacs nose markdown-preview-mode markdown-preview-eww magit-gitflow magit-gerrit lua-mode json-mode jedi-direx helm-gitlab helm-cscope haskell-mode graphviz-dot-mode golint go-rename go-guru go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gnuplot git flymake-python-pyflakes exec-path-from-shell elpy elpa-mirror elein company-go color-theme clojure-cheatsheet auto-yasnippet ac-cider 4clojure)))
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
