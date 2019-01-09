@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;env
-(setq exec-path (append  '("/usr/bin/" "/usr/local/bin" "~/workspaces/gopjt/bin") exec-path))
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin" ":/Applications/Racket v6.11/bin/"))
+(setq exec-path (append  '("/usr/bin/" "/usr/local/bin" "/Users/fikgol/workspaces/gopjt/bin") exec-path))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin" ":/Applications/Racket v6.11/bin/" ":/Users/fikgol/workspaces/gopjt/bin"))
 ;;;;;;;;;;;;;;;el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
@@ -480,7 +480,7 @@ type=\"text/css\"/>"
  '(display-time-mode t)
  '(package-selected-packages
    (quote
-    (kotlin-mode imenu-list yasnippet-bundle w3m swiper smartparens scala-mode2 sbt-mode robots-txt-mode python-docstring pyenv-mode py-autopep8 paredit ox-rst ox-reveal org-tree-slide org-preview-html org-present org-ac nurumacs nose markdown-preview-mode markdown-preview-eww magit-gitflow magit-gerrit lua-mode json-mode jedi-direx helm-gitlab helm-cscope haskell-mode graphviz-dot-mode golint go-rename go-guru go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gnuplot git flymake-python-pyflakes exec-path-from-shell elpy elpa-mirror elein company-go color-theme clojure-cheatsheet auto-yasnippet ac-cider 4clojure)))
+    (kotlin-mode imenu-list yasnippet-bundle w3m swiper smartparens scala-mode2 sbt-mode robots-txt-mode python-docstring pyenv-mode py-autopep8 paredit ox-rst ox-reveal org-tree-slide org-preview-html org-present org-ac nurumacs nose markdown-preview-mode markdown-preview-eww magit-gitflow magit-gerrit lua-mode json-mode jedi-direx helm-gitlab helm-cscope haskell-mode graphviz-dot-mode golint go-rename go-gopath go-errcheck go-complete go-autocomplete gnuplot-mode gnuplot git flymake-python-pyflakes exec-path-from-shell elpy elpa-mirror elein company-go color-theme clojure-cheatsheet auto-yasnippet ac-cider 4clojure)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
