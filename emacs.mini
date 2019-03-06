@@ -1,4 +1,26 @@
 ;;;;;;;;;;;;;;;;;;;;;;;; mac specific settings
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(setq exec-path (append  '("/usr/bin/" "/usr/local/bin" "/Users/fikgol/go/bin") exec-path))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin" ":/Applications/Racket v6.11/bin/" ":/Users/fikgol/go/bin"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;mirrors
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+			   ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+			   ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+			   ("gnu" . "https://elpa.gnu.org/packages/")
+			   ;("melpa" . "https://melpa.org/packages/")
+			   ("marmalade" . "https://marmalade-repo.org/packages/")
+			   )))
+
+(package-initialize)
+
 (when (eq system-type 'darwin)
   (setq mac-option-modifier 'alt)
   (setq mac-command-modifier 'meta)
@@ -192,3 +214,28 @@ type=\"text/css\"/>"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;;;;;;;;;;;;golang;;;;;;;;;;;;;;
+(require 'go-autocomplete)
+(require 'go-guru)
+
+(add-hook 'go-mode-hook
+	  (lambda ()
+	    (setq tab-width 4)
+	    (add-hook 'after-save-hook 'gofmt-before-save)
+	    (local-set-key (kbd "M-n") (next-mode-buffer ".go"))
+	    (go-guru-hl-identifier-mode)
+	    (local-set-key (kbd "C-c C-j") 'go-guru-definition)
+	    ))
+(go-gopath-set-gopath "~/go")
+
+
+;; Unconditionally kill unmodified buffers.
+(defun volatile-kill-buffer ()
+   "Kill current buffer unconditionally."
+   (interactive)
+   (let ((buffer-modified-p nil))
+     (kill-buffer (current-buffer))))
+(global-set-key (kbd "C-x k") 'volatile-kill-buffer)
+
+(global-set-key (kbd "M-*") 'pop-tag-mark)
