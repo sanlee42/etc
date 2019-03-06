@@ -1,0 +1,5 @@
+[user]
+	email = hit.cs.lijun@gmail.com
+	name = fikgol
+[core]
+editor = emacsclient -nw
