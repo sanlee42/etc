@@ -62,7 +62,7 @@
   #
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
-    EDITOR = "emacs";
+    EDITOR = "emacsclient -nw";
   };
   services.emacs.package = true;
   services.emacs.startWithUserSession = true;
@@ -75,7 +75,7 @@
     userName  = "fikgol";
     userEmail = "hit.cs.lijun@gmail.com";
     extraConfig = {
-      core = { editor = "emacs"; };
+      core = { editor = "emacsclient -nw"; };
     };
   };
   xfconf.settings = {
