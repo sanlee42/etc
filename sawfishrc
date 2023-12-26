@@ -102,7 +102,7 @@
 
 ;; Tiling
 (require 'sawfish.wm.tile.tile)
-(tall-tiling 0 #:width 1.75 #:top 0 #:bottom 0 #:gap 3 #:max 3)
+(tall-tiling 0 #:width 1.75 #:top 0 #:bottom 1 #:gap 3 #:max 3)
 (col-tiling 0 #:top 0 #:bottom 0 #:gap 3 #:cols 3)
 (bind-keys global-keymap
 	   "C-S-KP_Add" 'increase-max-windows
