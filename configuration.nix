@@ -31,7 +31,7 @@
   programs.zsh.enable = true;
   users.users.fikgol.shell = pkgs.zsh;
   # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "Asia/Shanghai";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
