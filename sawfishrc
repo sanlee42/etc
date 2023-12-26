@@ -6,7 +6,7 @@
 	   "Super-c" `(jump-or-exec "Chromium" "chromium")
 	   "Super-t" `(jump-or-exec "Terminal" "xfce4-terminal")
   	   "Super-r" `(jump-or-exec "terminal" "xfce4-terminal")
-	   "Super-e" `(jump-or-exec "GNU Emacs" "LC_CTYPE=zh_CN.UTF-8 emacs")
+	   "Super-e" `(jump-or-exec "GNU Emacs" "XMODIFIERS=@im=fcitx LC_CTYPE=en_US.UTF-8 emacs")
     	   "Super-i" `(jump-or-exec "Code" "LC_CTYPE=zh_CN.UTF-8 code")
        	   "Super-d" `(jump-or-exec ".* – \\(\\d+\\)" "LC_CTYPE=zh_CN.UTF-8 telegram-desktop")
 	   )
