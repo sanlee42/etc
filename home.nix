@@ -64,7 +64,8 @@
   home.sessionVariables = {
     EDITOR = "emacs";
   };
-
+  services.emacs.package = true;
+  services.emacs.startWithUserSession = true;
   # Let Home Manager install and manage itself.
   # programs.home-manager.enable = true;
   # fuck it not work,but worked in nixos cfg
