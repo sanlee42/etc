@@ -1,4 +1,4 @@
-em ~/.tmux.conf#--------base set--------------
+#--------base set--------------
 set -g prefix C-j
 set-window-option -g monitor-activity on # be notified when there is activity in one of your windows
 bind r source-file ~/.tmux.conf
@@ -23,5 +23,6 @@ run '/usr/share/tmux-plugin-manager/tpm'
 # press C-j I to install tmux-yank
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @yank_selection 'primary'
-# install xclip
 set -g @override_copy_command 'xclip -sel clip -i'
+
+set-option -g default-shell /usr/bin/zsh

@@ -1,21 +1,26 @@
 (setq load-path (append load-path '("~/.sawfish")))
+(require 'jump-or-exec)
+
 ;; =========key sequence==============
 (bind-keys global-keymap
 	   "Super-c" `(jump-or-exec "Chromium" "chromium")
-	   "Super-t" `(jump-or-exec "term" "lilyterm")
-	   "Super-e" `(jump-or-exec "emacs@" "LC_CTYPE=zh_CN.UTF-8 emacs")
-	   "Super-m" `(jump-or-exec "ThunderBird" "thunderbird"))
+	   "Super-t" `(jump-or-exec "Terminal" "xfce4-terminal")
+  	   "Super-r" `(jump-or-exec "terminal" "xfce4-terminal")
+	   "Super-e" `(jump-or-exec "GNU Emacs" "LC_CTYPE=zh_CN.UTF-8 emacs")
+    	   "Super-i" `(jump-or-exec "Code - OSS" "LC_CTYPE=zh_CN.UTF-8 code-oss")
+       	   "Super-d" `(jump-or-exec ".* – \\(\\d+\\)" "LC_CTYPE=zh_CN.UTF-8 telegram-desktop")
+	   )
 
 ;;============workspace==========
 (setq workspace-names '("one" "two" "three" "four" "five" "six" "seven" "eight"))
-(bind-keys global-keymap "C-1" '(activate-workspace 1))
-(bind-keys global-keymap "C-2" '(activate-workspace 2))
-(bind-keys global-keymap "C-3" '(activate-workspace 3))
-(bind-keys global-keymap "C-4" '(activate-workspace 4))
-(bind-keys global-keymap "C-F1" '(activate-workspace 5))
-(bind-keys global-keymap "C-F2" '(activate-workspace 6))
-(bind-keys global-keymap "C-F3" '(activate-workspace 7))
-(bind-keys global-keymap "C-F4" '(activate-workspace 8))
+(bind-keys global-keymap "Super-1" '(activate-workspace 1))
+(bind-keys global-keymap "Super-2" '(activate-workspace 2))
+(bind-keys global-keymap "Super-3" '(activate-workspace 3))
+(bind-keys global-keymap "Super-4" '(activate-workspace 4))
+(bind-keys global-keymap "Super-F1" '(activate-workspace 5))
+(bind-keys global-keymap "Super-F2" '(activate-workspace 6))
+(bind-keys global-keymap "Super-F3" '(activate-workspace 7))
+(bind-keys global-keymap "Super-F4" '(activate-workspace 8))
 
 ;;============window operation==========
 ;;; Super-q to close current window
@@ -29,8 +34,8 @@
 ;;;;
 (bind-keys window-keymap "Super-s" 'run-shell-command)
 ;; 返回当前窗口名字
-;; (bind-keys window-keymap "super-b"
-;; '(display-message (window-name (current-event-window))))
+(bind-keys window-keymap "Super-b"
+ '(display-message (window-name (current-event-window))))
 
 ;;;; resize-window
 (bind-keys window-keymap "Super-w"
@@ -82,41 +87,28 @@
 (bind-keys window-keymap "W-Button1-Click1" 'wy-move-window)
 
 ;;============screen shot==============
-					;(bind-keys global-keymap "Print" '(system "import -window root ~/documents/screen_shot/`date '+%Y%m%d-%H%M%S'`.png &")
+;(bind-keys global-keymap "Print" '(system "import -window root ~/Downloads/`date '+%Y%m%d-%H%M%S'`.png &"))
 
 ;;============iswitch-window===========
 (require 'iswitch-window)
 (bind-keys global-keymap "Super-y" 'iswitch-window)
 
 
-;;===========autorun & auto exit============
-;; (define kid-startup-programs
-;;   '(("xloadimage" "-onroot" "-fullscreen" "/home/kid/.desktop")
-;;     ("xscreensaver" "-no-splash")
-;;     ("scim" "-d")
-;;     ("asclock" "-theme" "/home/kid/.asclock/kid")))
-;; (mapc (lambda (program)
-;;         (apply start-process (make-process standard-output) program))
-;;       kid-startup-programs)
-;; (add-hook 'before-exit-hook
-;;           (lambda ()
-;;             (mapc stop-process (active-processes))))
-
 ;; =========== wallpaper =================
-;; (require 'backgrounds)
-;; (add-hook 'after-initialization-hook workspace-background-hook)
-;; (add-hook 'enter-workspace-hook workspace-background-hook)
-;; (add-hook 'workspace-state-change-hook workspace-background-customize-hook)
+;(require 'sawfish.wm.ext.wallpaper)
+;(set-wallpaper-xfce)
 
-;;================tiling==================
-;; (require 'sawfish.wm.tile.tile)
-;; (tall-tiling 0 #:width 1.75 #:top 0 #:bottom 0 #:gap 4 #:max 4 #:right t #:resize t #:auto t)
-;; (col-tiling 0 #:top 0 #:bottom 0 #:gap 3 #:cols 3 #:resize t)
-;; (bind-keys global-keymap
-;; 	   "C-S-KP_Add" 'increase-max-windows
-;; 	   "C-S-KP_Subtract" 'decrease-max-windows
-;; 	   "C-M-KP_Add" 'increase-cols
-;; 	   "C-M-KP_Subtract" 'decrease-cols
-;; 	   "C-M-Right" 'tall-rotate-right
-;; 	   "C-M-Left" 'tall-rotate-left
-;; 	   "C-F11" 'next-tiling)
+
+
+;; Tiling
+(require 'sawfish.wm.tile.tile)
+(tall-tiling 0 #:width 1.75 #:top 0 #:bottom 0 #:gap 3 #:max 3)
+(col-tiling 0 #:top 0 #:bottom 0 #:gap 3 #:cols 3)
+(bind-keys global-keymap
+	   "C-S-KP_Add" 'increase-max-windows
+	   "C-S-KP_Subtract" 'decrease-max-windows
+	   "C-M-KP_Add" 'increase-cols
+	   "C-M-KP_Subtract" 'decrease-cols
+	   "C-M-Right" 'tall-rotate-right
+	   "C-M-Left" 'tall-rotate-left
+	   "Super-F12" 'next-tiling)
