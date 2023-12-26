@@ -72,7 +72,7 @@
   # services.ssh-agent.enable = true;
   programs.git = {
     enable = true;
-    userName  = "fikgol";
+    userName  = "sanlee42";
     userEmail = "hit.cs.lijun@gmail.com";
     extraConfig = {
       core = { editor = "emacsclient -nw"; };

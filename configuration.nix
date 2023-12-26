@@ -109,6 +109,9 @@
      home-manager
      vscode
      inetutils
+     tmux
+     tmuxPlugins.yank
+     xclip
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -120,6 +123,7 @@
   # };
   # List services that you want to enable:
   programs.ssh.startAgent = true;
+  programs.tmux.plugins = [pkgs.tmuxPlugins.yank];
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
